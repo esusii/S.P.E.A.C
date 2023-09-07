@@ -1,0 +1,23 @@
+/* styles.css */
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 5fr);
+    //flex-wrap: wrap;
+    //flex-direction: column;
+    //align-items: center;
+    gap: 10px;
+    justify-items: center;
+}
+
+.option {
+    padding: 30px;
+    border: 5px solid black;
+    width: 200px; 
+    text-align: center;
+    font-size: 24px;
+}
+
+.option.selected {
+    background-color: yellow;
+}
