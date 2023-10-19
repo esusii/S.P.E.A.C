@@ -23,7 +23,7 @@ window.addEventListener('keydown', function (event) {
     }
 });
 
-var threshold = 250;
+var threshold = 230;
 
 // Check browser compatibility
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -48,6 +48,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
             // Connect the AnalyserNode to the microphone source
             microphone.connect(analyser);
+            var isOn = false;
             // Function to detect peaks
             function detectPeak() {
 
@@ -66,14 +67,18 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 }
 
                 if (peakDetected) {
-                    console.log("Peak detected!");
-                    if (selectedIndex == undoIndex) {
-                        message.removeChild(message.lastElementChild);
-                    } else {
-                        message.appendChild(options[selectedIndex].cloneNode(true))
+                    if (!isOn) {
+                        console.log("Peak detected!");
+                        if (selectedIndex == undoIndex) {
+                            message.removeChild(message.lastElementChild);
+                        } else {
+                            message.appendChild(options[selectedIndex].cloneNode(true))
+                        }
                     }
-                    detectPeakInterval = setTimeout(detectPeak, 2000); // Adjust the interval as needed
+                    isOn = true;
+                    detectPeakInterval = setTimeout(detectPeak, 100); // Adjust the interval as needed
                 } else {
+                    isOn = false;
                     detectPeakInterval = setTimeout(detectPeak, 100); // Adjust the interval as needed
                 }
 
@@ -90,3 +95,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 } else {
     console.error('Web Audio API is not supported in this browser.');
 }
+
+
+// 
